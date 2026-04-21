@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>表格示例</title>
+</head>
+<body>
+    <!-- 表格 开始 -->
+    <table border="1">
+        <!-- tr: 表示1行 -->
+        <tr>
+            <!-- td: 表示单元格（列） -->
+            <td>a</td>
+            <td>b</td>
+            <td rowspan="2">ccc</td>
+            <!--合并第三列-->
+        </tr>
+        <tr>
+            <td>c</td>
+            <td>d</td>
+        </tr>
+    </table>
+    <!-- 表格 结束 -->
+
+
+    这是 <sub> 下标</sub> 和 <sup> 上标</sup>
+
+    <form action="http://localhost:8080/user/login" method="POST">
+        <!-- 用户名输入 -->
+    用户名：<input type="text" name="username" placeholder="请输入姓名"><br>
+    密码：<input type="password" name="password" placeholder="请输入密码"><br>
+    <!-- 性别下拉框 -->
+     <br>
+    性别：
+    <select name="gender">
+        <option value="male">男</option>
+        <option value="female">女</option>
+    </select>
+    <br><br>
+
+    身份：
+    <input type="radio" name="gender" value="male" id="male">
+    <label for="male">用户</label>
+
+    <input type="radio" name="gender" value="female" id="female">
+    <label for="female">商家</label>
+
+    <br>
+    <!-- 复选框 -->
+    <input type="checkbox" name="sport" value="b-ball" />篮球
+    <input type="checkbox" name="sport" value="f-ball" />足球
+    <input type="checkbox" name="sport" value="v-ball" />排球
+    
+    
+    <!-- 文本域：多行输入，比如留言、简介 -->
+    <label for="intro">个人简介：</label><br>
+    <textarea id="intro" name="intro" rows="5" cols="50" placeholder="请输入个人简介..."></textarea>
+        
+    <!-- 提交按钮 -->
+    <button type="submit">提交</button>
+    </form>
+
+</body>
+</html>
+
+<style type="">
+    /*背景颜色*/
+    body {
+    background-color: #f0f0f0;
+    }
+
+    /* 表格样式 */
+    table {
+        border-collapse: collapse; /* 合并边框 */
+        width: 100%;
+    }
+
+</style>

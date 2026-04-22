@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>个人中心</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.cn/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap">
+  <link rel="stylesheet" href="css/nav.css">
+  <link rel="stylesheet" href="css/profile.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-item" data-page="index">首页</div>
+    <div class="nav-item" data-page="news">新闻</div>
+    <div class="nav-item" data-page="about">关于我们</div>
+    <div class="nav-item nav-item-right" data-page="profile">个人中心</div>
+  </nav>
+
+  <div class="container">
+    <div class="user-header">
+        <div class="avatar">用</div>
+        <div class="user-info">
+            <div class="username">张三</div>
+            <div class="signature">努力生活，认真工作</div>
+        </div>
+        <!-- 新增：退出登录按钮，会自动跑到最右边 -->
+        <button class="logout-btn" id="logoutBtn">退出登录</button>
+    </div>
+
+    <div class="main">
+      <div class="sidebar">
+        <div class="sidebar-item active" data-panel="profile">个人资料</div>
+        <div class="sidebar-item" data-panel="security">安全设置</div>
+        <div class="sidebar-item" data-panel="bind">账号绑定</div>
+        <div class="sidebar-item" data-panel="notify">消息通知</div>
+        <div class="sidebar-item" data-panel="privacy">隐私设置</div>
+      </div>
+
+      <div class="content">
+        <div class="panel active" id="panel-profile">
+          <h2>个人资料</h2>
+          <div class="form-group">
+            <label>用户昵称</label>
+            <input type="text" value="张三">
+          </div>
+          <div class="form-group">
+            <label>手机号码</label>
+            <input type="text" value="13800138000">
+          </div>
+          <div class="form-group">
+            <label>电子邮箱</label>
+            <input type="email" value="zhangsan@example.com">
+          </div>
+          <div class="form-group">
+            <label>个性签名</label>
+            <input type="text" value="努力生活，认真工作">
+          </div>
+          <button class="save-btn">保存修改</button>
+        </div>
+
+        <div class="panel" id="panel-security">
+          <h2>安全设置</h2>
+          <div class="form-group">
+            <label>当前密码</label>
+            <input type="password" placeholder="请输入当前登录密码">
+          </div>
+          <div class="form-group">
+            <label>新密码</label>
+            <input type="password" placeholder="请设置6-20位新密码">
+          </div>
+          <div class="form-group">
+            <label>确认新密码</label>
+            <input type="password" placeholder="请再次输入新密码">
+          </div>
+          <button class="save-btn">修改密码</button>
+        </div>
+
+        <div class="panel" id="panel-bind">
+          <h2>账号绑定</h2>
+          <div class="bind-item">
+            <div class="bind-info">
+              <span class="bind-title">微信绑定</span>
+              <span class="bind-status unbind">未绑定</span>
+            </div>
+            <button class="bind-btn">去绑定</button>
+          </div>
+          <div class="bind-item">
+            <div class="bind-info">
+              <span class="bind-title">QQ绑定</span>
+              <span class="bind-status unbind">未绑定</span>
+            </div>
+            <button class="bind-btn">去绑定</button>
+          </div>
+          <div class="bind-item">
+            <div class="bind-info">
+              <span class="bind-title">邮箱绑定</span>
+              <span class="bind-status binded">已绑定</span>
+            </div>
+            <button class="bind-btn unbind-btn">更换绑定</button>
+          </div>
+          <div class="bind-item">
+            <div class="bind-info">
+              <span class="bind-title">手机号绑定</span>
+              <span class="bind-status binded">已绑定</span>
+            </div>
+            <button class="bind-btn unbind-btn">更换绑定</button>
+          </div>
+        </div>
+
+        <div class="panel" id="panel-notify">
+          <h2>消息通知</h2>
+          <div class="switch-item">
+            <div>
+              <p class="switch-title">系统公告</p>
+              <p class="switch-desc">接收平台发布的系统公告、版本更新通知</p>
+            </div>
+            <label class="switch">
+              <input type="checkbox" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+          <div class="switch-item">
+            <div>
+              <p class="switch-title">账号安全通知</p>
+              <p class="switch-desc">接收密码修改、异地登录、账号异常提醒</p>
+            </div>
+            <label class="switch">
+              <input type="checkbox" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+          <div class="switch-item">
+            <div>
+              <p class="switch-title">营销推送</p>
+              <p class="switch-desc">接收平台活动、优惠福利、新品推荐</p>
+            </div>
+            <label class="switch">
+              <input type="checkbox">
+              <span class="slider"></span>
+            </label>
+          </div>
+        </div>
+
+        <div class="panel" id="panel-privacy">
+          <h2>隐私设置</h2>
+          <div class="switch-item">
+            <div>
+              <p class="switch-title">个人资料可见性</p>
+              <p class="switch-desc">控制其他用户是否可以查看你的个人资料</p>
+            </div>
+            <label class="switch">
+              <input type="checkbox" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+          <div class="switch-item">
+            <div>
+              <p class="switch-title">搜索可见</p>
+              <p class="switch-desc">允许其他用户通过手机号/昵称搜索到你</p>
+            </div>
+            <label class="switch">
+              <input type="checkbox" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+          <button class="danger-btn" style="margin-top:20px">申请注销账号</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

@@ -8,7 +8,8 @@
     "pages/checkout/checkout",
     "pages/order-list/order-list",
     "pages/profile/profile",
-    "pages/address/address"
+    "pages/address/address",
+    "pages/search/search"
   ],
   "window": {
     "navigationBarTitleText": "图书商城",

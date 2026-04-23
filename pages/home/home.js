@@ -41,9 +41,8 @@ Page({
   },
 
   onSearchTap() {
-    wx.showToast({
-      title: "搜索功能可后续添加",
-      icon: "none",
+    wx.navigateTo({
+      url: "/pages/search/search",
     });
   },
 });

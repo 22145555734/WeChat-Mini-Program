@@ -1,0 +1,89 @@
+<view class="search-page">
+  <!-- 搜索栏 -->
+  <view class="search-bar">
+    <view class="search-input-wrapper">
+      <image class="search-icon" src="/images/icons/search.png" mode="aspectFit"></image>
+      <input
+        class="search-input"
+        placeholder="搜索图书名称、作者"
+        value="{{keyword}}"
+        bindinput="onInput"
+        bindconfirm="onSearch"
+        focus
+      />
+      <image
+        wx:if="{{keyword}}"
+        class="clear-icon"
+        src="/images/icons/close.png"
+        mode="aspectFit"
+        bindtap="clearInput"
+      ></image>
+    </view>
+    <view class="search-btn" bindtap="onSearch">搜索</view>
+  </view>
+
+  <!-- 搜索结果 -->
+  <view wx:if="{{showResults}}" class="result-container">
+    <view class="result-header">
+      共找到 {{results.length}} 本相关图书
+    </view>
+    <view class="book-list">
+      <view
+        wx:for="{{results}}"
+        wx:key="id"
+        class="book-item"
+        bindtap="goDetail"
+        data-id="{{item.id}}"
+      >
+        <image class="book-cover" src="{{item.cover}}" mode="aspectFit"></image>
+        <view class="book-info">
+          <view class="book-name">{{item.name}}</view>
+          <view class="book-author">{{item.author}}</view>
+          <view class="book-price">¥{{item.price}}</view>
+        </view>
+      </view>
+    </view>
+    <view wx:if="{{results.length === 0}}" class="empty-state">
+      <image class="empty-icon" src="/images/icons/empty.png" mode="aspectFit"></image>
+      <text>未找到相关图书</text>
+    </view>
+  </view>
+
+  <!-- 历史记录和热门搜索 -->
+  <view wx:if="{{!showResults}}" class="search-suggest">
+    <!-- 搜索历史 -->
+    <view wx:if="{{history.length > 0}}" class="history-section">
+      <view class="section-header">
+        <text>搜索历史</text>
+        <text class="clear-history" bindtap="clearHistory">清空</text>
+      </view>
+      <view class="keyword-list">
+        <view
+          wx:for="{{history}}"
+          wx:key="*this"
+          class="keyword-tag"
+          bindtap="onKeywordTap"
+          data-keyword="{{item}}"
+        >
+          {{item}}
+        </view>
+      </view>
+    </view>
+
+    <!-- 热门搜索 -->
+    <view class="hot-section">
+      <view class="section-header">热门搜索</view>
+      <view class="keyword-list">
+        <view
+          wx:for="{{hotKeywords}}"
+          wx:key="*this"
+          class="keyword-tag hot"
+          bindtap="onKeywordTap"
+          data-keyword="{{item}}"
+        >
+          {{item}}
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,40 @@
+<view class="page" wx:if="{{book}}">
+  <view class="card">
+    <image class="cover" src="{{book.cover}}" mode="aspectFill" />
+
+    <view class="content">
+      <view class="title">{{book.name}}</view>
+      <view class="author">作者：{{book.author}}</view>
+      <view class="author">出版社：{{book.press}}</view>
+
+      <view class="tags">
+        <text wx:if="{{book.isNew}}" class="tag new">新书</text>
+        <text wx:if="{{book.isHot}}" class="tag hot">热门</text>
+      </view>
+
+      <view class="price">¥{{book.price}}</view>
+      <view class="meta">销量：{{book.sales}} ｜ 库存：{{book.stock}}</view>
+
+      <!-- 数量选择 -->
+      <view class="quantity-row">
+        <text class="label">购买数量</text>
+        <view class="quantity-box">
+          <button class="qty-btn" bindtap="onMinus" disabled="{{count <= 1}}">-</button>
+          <input class="qty-input" type="number" value="{{count}}" bindinput="onCountInput" />
+          <button class="qty-btn" bindtap="onPlus" disabled="{{count >= book.stock}}">+</button>
+        </view>
+      </view>
+
+      <view class="desc-title">图书简介</view>
+      <view class="desc">{{book.desc}}</view>
+
+      <view class="desc-title">详细介绍</view>
+      <view class="desc">{{book.detail}}</view>
+    </view>
+  </view>
+
+  <view class="bottom-bar">
+    <button class="btn cart" bindtap="onAddCartTap">加入购物车</button>
+    <button class="btn buy" bindtap="onBuyTap">立即购买</button>
+  </view>
+</view>

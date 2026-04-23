@@ -1,0 +1,42 @@
+<view class="page">
+  <view class="content">
+    <!-- 左侧分类列表 -->
+    <scroll-view class="category-sidebar" scroll-y>
+      <view
+        class="category-item {{currentId === item.id ? 'active' : ''}}"
+        wx:for="{{categories}}"
+        wx:key="id"
+        data-id="{{item.id}}"
+        bindtap="onCategoryTap"
+      >
+        <text>{{item.name}}</text>
+      </view>
+    </scroll-view>
+
+    <!-- 右侧图书列表 -->
+    <scroll-view class="book-list" scroll-y>
+      <view
+        class="book-item"
+        wx:for="{{currentBooks}}"
+        wx:key="id"
+        data-id="{{item.id}}"
+        bindtap="goDetail"
+      >
+        <image class="cover" src="{{item.cover}}" mode="aspectFill" />
+        <view class="info">
+          <view class="name">{{item.name}}</view>
+          <view class="author">{{item.author}}</view>
+          <view class="price-row">
+            <text class="price">¥{{item.price}}</text>
+            <text wx:if="{{item.isNew}}" class="tag new">新书</text>
+            <text wx:if="{{item.isHot}}" class="tag hot">热门</text>
+          </view>
+        </view>
+      </view>
+
+      <view wx:if="{{currentBooks.length === 0}}" class="empty">
+        <text>该分类下暂无图书</text>
+      </view>
+    </scroll-view>
+  </view>
+</view>

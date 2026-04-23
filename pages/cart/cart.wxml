@@ -1,0 +1,50 @@
+<view class="page">
+  <view wx:if="{{cart.length === 0}}" class="empty">
+    <text>购物车空空如也~</text>
+    <navigator url="/pages/book-list/book-list" class="go">去逛逛</navigator>
+  </view>
+
+  <view wx:else>
+    <view class="item" wx:for="{{cart}}" wx:key="id">
+      <checkbox-group bindchange="onToggleItem" data-id="{{item.id}}">
+        <label class="check-wrap">
+          <checkbox value="1" checked="{{item.checked}}" />
+        </label>
+      </checkbox-group>
+
+      <image class="cover" src="{{item.cover}}" mode="aspectFill" />
+
+      <view class="info">
+        <view class="name">{{item.name}}</view>
+        <view class="author">{{item.author}}</view>
+        <view class="price">¥{{item.price}}</view>
+
+        <view class="actions">
+          <view class="count-box">
+            <text class="btn" data-id="{{item.id}}" bindtap="onMinus">-</text>
+            <text class="count">{{item.count}}</text>
+            <text class="btn" data-id="{{item.id}}" bindtap="onPlus">+</text>
+          </view>
+          <text class="remove" data-id="{{item.id}}" bindtap="onRemove">删除</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="bottom">
+      <checkbox-group bindchange="onToggleAll">
+        <label class="all-check">
+          <checkbox value="all" checked="{{allChecked}}" />
+          <text>全选</text>
+        </label>
+      </checkbox-group>
+
+      <view class="sum">
+        合计：<text class="money">¥{{totalPrice}}</text>
+      </view>
+
+      <button class="checkout" bindtap="onCheckoutTap">
+        结算({{checkedCount}})
+      </button>
+    </view>
+  </view>
+</view>

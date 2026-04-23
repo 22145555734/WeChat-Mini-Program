@@ -1,0 +1,96 @@
+<view class="page">
+  <!-- 搜索框 -->
+  <view class="search-box" bindtap="onSearchTap">
+    <text class="search-placeholder">搜索你想要的图书</text>
+  </view>
+
+  <!-- 轮播图 -->
+  <swiper
+    class="banner-swiper"
+    indicator-dots
+    autoplay
+    circular
+    interval="3000"
+    duration="500"
+  >
+    <block wx:for="{{banners}}" wx:key="id">
+      <swiper-item>
+        <image class="banner-image" src="{{item.image}}" mode="aspectFill"></image>
+      </swiper-item>
+    </block>
+  </swiper>
+
+  <!-- 分类入口 -->
+  <view class="section">
+    <view class="section-title">图书分类</view>
+    <view class="category-grid">
+      <block wx:for="{{categories}}" wx:key="id">
+        <view
+          class="category-item"
+          data-id="{{item.id}}"
+          data-name="{{item.name}}"
+          bindtap="goCategory"
+        >
+          <view class="category-icon">{{item.name.slice(0,1)}}</view>
+          <text class="category-name">{{item.name}}</text>
+        </view>
+      </block>
+    </view>
+  </view>
+
+  <!-- 热门推荐 -->
+  <view class="section">
+    <view class="section-header">
+      <text class="section-title">热门推荐</text>
+      <text class="section-more">精选热销图书</text>
+    </view>
+
+    <view class="book-list">
+      <block wx:for="{{hotBooks}}" wx:key="id">
+        <view
+          class="book-card"
+          data-id="{{item.id}}"
+          bindtap="goDetail"
+        >
+          <image class="book-cover" src="{{item.cover}}" mode="aspectFill"></image>
+          <view class="book-info">
+            <view class="book-name text-ellipsis-2">{{item.name}}</view>
+            <view class="book-author">{{item.author}}</view>
+            <view class="book-bottom">
+              <text class="book-price">¥{{item.price}}</text>
+              <text class="book-sales">销量 {{item.sales}}</text>
+            </view>
+          </view>
+        </view>
+      </block>
+    </view>
+  </view>
+
+  <!-- 新书上架 -->
+  <view class="section">
+    <view class="section-header">
+      <text class="section-title">新书上架</text>
+      <text class="section-more">最新精选内容</text>
+    </view>
+
+    <view class="book-list">
+      <block wx:for="{{newBooks}}" wx:key="id">
+        <view
+          class="book-card"
+          data-id="{{item.id}}"
+          bindtap="goDetail"
+        >
+          <image class="book-cover" src="{{item.cover}}" mode="aspectFill"></image>
+          <view class="book-info">
+            <view class="book-name text-ellipsis-2">{{item.name}}</view>
+            <view class="book-author">{{item.author}}</view>
+            <view class="book-bottom">
+              <text class="book-price">¥{{item.price}}</text>
+              <text class="book-sales">库存 {{item.stock}}</text>
+            </view>
+          </view>
+        </view>
+      </block>
+    </view>
+  </view>
+</view>

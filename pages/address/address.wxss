@@ -1,0 +1,145 @@
+.page {
+  padding: 24rpx;
+  background: #f7f8fa;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+.address-item {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 24rpx;
+  margin-bottom: 20rpx;
+}
+
+.address-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12rpx;
+}
+.name {
+  font-size: 30rpx;
+  font-weight: 600;
+  margin-right: 16rpx;
+}
+.phone {
+  font-size: 28rpx;
+  color: #666;
+}
+
+.tags {
+  margin-left: auto;
+}
+.tag {
+  font-size: 20rpx;
+  padding: 4rpx 12rpx;
+  border-radius: 8rpx;
+}
+.default-tag {
+  background: #e6f4ff;
+  color: #1677ff;
+}
+
+.address-detail {
+  font-size: 26rpx;
+  color: #666;
+  line-height: 1.5;
+  margin-bottom: 16rpx;
+}
+
+.address-actions {
+  display: flex;
+  border-top: 1rpx solid #f0f0f0;
+  padding-top: 16rpx;
+}
+.action-btn {
+  font-size: 24rpx;
+  padding: 8rpx 16rpx;
+  margin-right: 16rpx;
+  background: #f5f5f5;
+  color: #666;
+  border-radius: 8rpx;
+  line-height: 1.2;
+}
+.action-btn[disabled] {
+  color: #ccc;
+}
+.action-btn.delete {
+  color: #e64340;
+  margin-left: auto;
+  margin-right: 0;
+}
+
+.empty {
+  text-align: center;
+  padding: 100rpx 0;
+  color: #999;
+  font-size: 28rpx;
+}
+
+.add-btn {
+  width: 100%;
+  background: #fff;
+  color: #1677ff;
+  border: 2rpx solid #1677ff;
+  border-radius: 999rpx;
+  margin-top: 20rpx;
+}
+
+.form {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 24rpx;
+}
+.form-item {
+  display: flex;
+  align-items: center;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+.form-item:last-child {
+  border-bottom: none;
+}
+.label {
+  width: 140rpx;
+  font-size: 28rpx;
+  color: #333;
+}
+.input {
+  flex: 1;
+  font-size: 28rpx;
+}
+.textarea {
+  min-height: 80rpx;
+  padding: 10rpx 0;
+}
+
+.picker {
+  flex: 1;
+  text-align: right;
+  font-size: 28rpx;
+  color: #333;
+  padding: 10rpx 0;
+}
+
+.picker .placeholder {
+  color: #999;
+}
+
+.form-actions {
+  display: flex;
+  margin-top: 40rpx;
+  gap: 20rpx;
+}
+.cancel-btn {
+  flex: 1;
+  background: #f5f5f5;
+  color: #666;
+  border-radius: 999rpx;
+}
+.save-btn {
+  flex: 1;
+  background: #1677ff;
+  color: #fff;
+  border-radius: 999rpx;
+}

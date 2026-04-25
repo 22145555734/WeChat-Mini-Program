@@ -31,7 +31,7 @@
           data-name="{{item.name}}"
           bindtap="goCategory"
         >
-          <view class="category-icon">{{item.name.slice(0,1)}}</view>
+          <image class="category-icon" src="{{item.icon}}" style="background:{{item.bgColor}}" mode="aspectFit"></image>
           <text class="category-name">{{item.name}}</text>
         </view>
       </block>

@@ -41,9 +41,11 @@ Page({
     setTimeout(() => {
       const userInfo = {
         nickName: "图书爱好者",
-        avatarUrl: "",
+        avatar: "",
         phone: "138****8888",
-        level: "VIP会员",
+        email: "booklover@example.com",
+        username: "booklover",
+        password: "********",
       };
       wx.setStorageSync("USER_INFO", userInfo);
       this.setData({

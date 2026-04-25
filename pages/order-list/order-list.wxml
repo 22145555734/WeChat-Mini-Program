@@ -1,0 +1,36 @@
+<view class="page">
+  <block wx:if="{{orders.length}}">
+    <block wx:for="{{orders}}" wx:key="id">
+      <view class="card" bindtap="goOrderDetail" data-id="{{item.id}}">
+        <view class="head">
+          <text class="no">订单号：{{item.id}}</text>
+          <text class="status status-{{item.status}}">{{item.statusText}}</text>
+        </view>
+
+        <view class="time">下单时间：{{item.createTimeText}}</view>
+
+        <view class="goods-preview">
+          <block wx:for="{{item.items}}" wx:key="id">
+            <image class="cover" src="{{item.cover}}" mode="aspectFill"></image>
+          </block>
+        </view>
+
+        <view class="foot">
+          <text>共 {{item.totalCount}} 件</text>
+          <text class="price">合计：¥{{item.totalPriceText}}</text>
+        </view>
+
+        <!-- 订单操作按钮 -->
+        <view class="order-actions" wx:if="{{item.status === 'PENDING'}}">
+          <button class="action-btn cancel" bindtap="onCancelOrder" data-id="{{item.id}}">取消订单</button>
+          <button class="action-btn pay" bindtap="onPayOrder" data-id="{{item.id}}">立即支付</button>
+        </view>
+      </view>
+    </block>
+  </block>
+
+  <view class="empty" wx:else>
+    <view class="empty-text">暂无订单</view>
+    <button type="primary" size="mini" bindtap="goShopping">去逛逛</button>
+  </view>
+</view>

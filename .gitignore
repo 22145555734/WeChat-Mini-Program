@@ -1,3 +1,4 @@
+# Java项目配置
 HELP.md
 target/
 .mvn/wrapper/maven-wrapper.jar
@@ -31,3 +32,23 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# 微信开发者工具生成的文件
+*.sublime-project
+*.sublime-workspace
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# 日志文件
+*.log
+logs/
+
+# node_modules（如果有）
+node_modules/
+
+# 临时文件
+*.tmp
+*.temp

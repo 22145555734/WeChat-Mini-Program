@@ -1,0 +1,86 @@
+<view class="page">
+  <!-- 用户信息卡片 -->
+  <view class="user-card" bindtap="{{isLoggedIn ? '' : 'onLogin'}}">
+    <view class="avatar">
+      <text class="avatar-text">{{isLoggedIn ? userInfo.nickName.charAt(0) : '用'}}</text>
+    </view>
+    <view class="user-info">
+      <view class="nickname">{{isLoggedIn ? userInfo.nickName : '微信用户'}}</view>
+      <view class="tips">
+        <text wx:if="{{isLoggedIn}}">{{userInfo.level}} · {{userInfo.phone}}</text>
+        <text wx:else>点击登录享更多权益</text>
+      </view>
+    </view>
+    <view wx:if="{{isLoggedIn}}" class="logout-btn" bindtap="onLogout" catchtap="true">
+      <text>退出</text>
+    </view>
+  </view>
+
+  <!-- 订单区域 -->
+  <view class="section">
+    <view class="section-header">
+      <text class="section-title">我的订单</text>
+      <navigator url="/pages/order-list/order-list" class="more">
+        全部订单
+        <text class="arrow">></text>
+      </navigator>
+    </view>
+
+    <view class="order-tabs">
+      <view class="order-item" bindtap="goToOrders" data-status="PENDING">
+        <view class="order-icon pending">
+          <text class="iconfont">💳</text>
+        </view>
+        <text class="order-label">待付款</text>
+        <view class="badge" wx:if="{{pendingCount > 0}}">{{pendingCount}}</view>
+      </view>
+      <view class="order-item" bindtap="goToOrders" data-status="PAID">
+        <view class="order-icon paid">
+          <text class="iconfont">📦</text>
+        </view>
+        <text class="order-label">待收货</text>
+        <view class="badge" wx:if="{{paidCount > 0}}">{{paidCount}}</view>
+      </view>
+      <view class="order-item" bindtap="goToOrders">
+        <view class="order-icon all">
+          <text class="iconfont">📋</text>
+        </view>
+        <text class="order-label">全部订单</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 功能菜单 -->
+  <view class="section">
+    <view class="menu-list">
+      <view class="menu-item" bindtap="goToAddress">
+        <view class="menu-left">
+          <text class="menu-icon">📍</text>
+          <text class="menu-text">收货地址</text>
+        </view>
+        <text class="arrow">></text>
+      </view>
+
+      <view class="menu-item" bindtap="clearStorage">
+        <view class="menu-left">
+          <text class="menu-icon">🗑️</text>
+          <text class="menu-text">清空缓存</text>
+        </view>
+        <text class="arrow">></text>
+      </view>
+
+      <view class="menu-item">
+        <view class="menu-left">
+          <text class="menu-icon">ℹ️</text>
+          <text class="menu-text">关于我们</text>
+        </view>
+        <text class="arrow">></text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 版本信息 -->
+  <view class="version">
+    <text>图书商城 v1.0.0</text>
+  </view>
+</view>

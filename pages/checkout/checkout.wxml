@@ -1,0 +1,40 @@
+<view class="page">
+  <view class="section address-section" bindtap="goAddress">
+    <view class="section-title">收货地址</view>
+    <block wx:if="{{address}}">
+      <view class="address-info">
+        <text class="name">{{address.name}}</text>
+        <text class="phone">{{address.phone}}</text>
+      </view>
+      <view class="address-detail">{{address.fullAddress || address.detail}}</view>
+    </block>
+    <view class="no-address" wx:else>
+      <text>请选择收货地址</text>
+    </view>
+    <view class="arrow">></view>
+  </view>
+
+  <view class="section">
+    <view class="section-title">商品清单</view>
+    <block wx:for="{{items}}" wx:key="id">
+      <view class="item">
+        <image class="cover" src="{{item.cover}}" mode="aspectFill" />
+        <view class="info">
+          <view class="name">{{item.name}}</view>
+          <view class="meta">¥{{item.price}} × {{item.count}}</view>
+        </view>
+        <view class="amount">¥{{item.amount}}</view>
+      </view>
+    </block>
+  </view>
+
+  <view class="section">
+    <view class="section-title">订单备注</view>
+    <textarea class="remark-input" placeholder="选填，可填写您的特殊要求" value="{{remark}}" bindinput="onRemarkInput" maxlength="100" auto-height />
+  </view>
+
+  <view class="bottom-bar">
+    <view>共 {{totalCount}} 件，合计：<text class="price">¥{{totalPrice}}</text></view>
+    <button class="submit" bindtap="submitOrder" disabled="{{!address || submitting}}">提交订单</button>
+  </view>
+</view>

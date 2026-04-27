@@ -1,0 +1,38 @@
+<view class="container">
+  <view class="logo">
+    <text class="title">📚 图书商城</text>
+  </view>
+
+  <view class="form">
+    <view class="form-item">
+      <input
+        class="input"
+        placeholder="请输入用户名"
+        value="{{username}}"
+        bindinput="onUsernameInput"
+      />
+    </view>
+    <view class="form-item">
+      <input
+        class="input"
+        type="password"
+        placeholder="请输入密码"
+        value="{{password}}"
+        bindinput="onPasswordInput"
+      />
+    </view>
+  </view>
+
+  <view class="btn-group">
+    <button class="btn btn-primary" bindtap="onLogin" loading="{{loading}}">
+      <span class="btn-text">登录</span>
+    </button>
+    <button class="btn btn-secondary" bindtap="onRegister">
+      <span class="btn-text">注册</span>
+    </button>
+  </view>
+
+  <view class="tips">
+    <text>测试账号：admin / 123456</text>
+  </view>
+</view>

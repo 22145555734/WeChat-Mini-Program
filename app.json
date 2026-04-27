@@ -1,15 +1,16 @@
 {
   "pages": [
+    "pages/login/login",
     "pages/home/home",
     "pages/category/category",
-    "pages/book-list/book-list",
-    "pages/book-detail/book-detail",
     "pages/cart/cart",
+    "pages/profile/profile",
+    "pages/book-detail/book-detail",
+    "pages/book-list/book-list",
+    "pages/search/search",
+    "pages/address/address",
     "pages/checkout/checkout",
     "pages/order-list/order-list",
-    "pages/profile/profile",
-    "pages/address/address",
-    "pages/search/search",
     "pages/order-detail/order-detail"
   ],
   "window": {

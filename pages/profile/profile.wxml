@@ -1,17 +1,17 @@
 <view class="page">
   <!-- 用户信息卡片 -->
-  <view class="user-card" bindtap="{{isLoggedIn ? '' : 'onLogin'}}">
+  <view class="user-card" bindtap="onCardTap">
     <view class="avatar">
-      <text class="avatar-text">{{isLoggedIn ? userInfo.nickName.charAt(0) : '用'}}</text>
+      <text class="avatar-text">{{isLoggedIn ? userInfo.nickname.charAt(0) : '用'}}</text>
     </view>
     <view class="user-info">
-      <view class="nickname">{{isLoggedIn ? userInfo.nickName : '微信用户'}}</view>
+      <view class="nickname">{{isLoggedIn ? userInfo.nickname : '微信用户'}}</view>
       <view class="tips">
-        <text wx:if="{{isLoggedIn}}">{{userInfo.level}} · {{userInfo.phone}}</text>
-        <text wx:else>点击登录享更多权益</text>
+        <text wx:if="{{isLoggedIn}}" class="user-id">ID: {{userInfo.id}}</text>
+        <text wx:else class="login-tip">点击登录享更多权益</text>
       </view>
     </view>
-    <view wx:if="{{isLoggedIn}}" class="logout-btn" bindtap="onLogout" catchtap="true">
+    <view wx:if="{{isLoggedIn}}" class="logout-btn" catchtap="onLogout">
       <text>退出</text>
     </view>
   </view>

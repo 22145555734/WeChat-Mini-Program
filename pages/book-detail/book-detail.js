@@ -1,4 +1,4 @@
-const books = require("../../data/books.js");
+const { bookApi, cartApi } = require("../../utils/api.js");
 const cartUtil = require("../../utils/cart.js");
 
 Page({
@@ -9,11 +9,14 @@ Page({
 
   onLoad(options) {
     const id = options.id ? Number(options.id) : null;
-    const book = books.find((item) => Number(item.id) === id);
+    this.loadBookDetail(id);
+  },
 
-    if (!book) {
+  // 加载图书详情
+  async loadBookDetail(id) {
+    if (!id) {
       wx.showToast({
-        title: "未找到该图书",
+        title: "参数错误",
         icon: "none",
       });
       setTimeout(() => {
@@ -22,11 +25,33 @@ Page({
       return;
     }
 
-    this.setData({ book });
+    wx.showLoading({ title: "加载中..." });
 
-    wx.setNavigationBarTitle({
-      title: book.name || "图书详情",
-    });
+    try {
+      const res = await bookApi.getBookById(id);
+      const book = res.data;
+
+      if (!book) {
+        wx.showToast({
+          title: "未找到该图书",
+          icon: "none",
+        });
+        setTimeout(() => {
+          wx.navigateBack();
+        }, 1200);
+        return;
+      }
+
+      this.setData({ book });
+
+      wx.setNavigationBarTitle({
+        title: book.name || "图书详情",
+      });
+    } catch (error) {
+      console.error("加载图书详情失败:", error);
+    } finally {
+      wx.hideLoading();
+    }
   },
 
   // 减少数量
@@ -79,11 +104,23 @@ Page({
     const { book, count } = this.data;
     if (!book) return;
 
-    cartUtil.addToCart(book, count);
-
-    wx.showToast({
-      title: "已加入购物车",
-      icon: "success",
-    });
+    // 使用网络请求添加到购物车
+    cartApi
+      .addToCart({ bookId: book.id, quantity: count })
+      .then(() => {
+        wx.showToast({
+          title: "已加入购物车",
+          icon: "success",
+        });
+      })
+      .catch((err) => {
+        console.error("添加购物车失败:", err);
+        // 降级使用本地存储
+        cartUtil.addToCart(book, count);
+        wx.showToast({
+          title: "已加入购物车",
+          icon: "success",
+        });
+      });
   },
 });

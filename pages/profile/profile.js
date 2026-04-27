@@ -1,5 +1,5 @@
 // pages/profile/profile.js
-const storage = require("../../utils/storage.js");
+const { userApi } = require("../../utils/api.js");
 
 Page({
   /**
@@ -16,61 +16,79 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad() {
-    // 检查登录状态
-    const userInfo = wx.getStorageSync("USER_INFO");
-    if (userInfo) {
-      this.setData({
-        isLoggedIn: true,
-        userInfo,
-      });
-    }
+    this.checkLoginStatus();
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow() {
-    this.loadOrderStats();
+    this.checkLoginStatus();
   },
 
   /**
-   * 模拟登录
+   * 检查登录状态
    */
-  onLogin() {
-    wx.showLoading({ title: "登录中..." });
-    setTimeout(() => {
-      const userInfo = {
-        nickName: "图书爱好者",
-        avatar: "",
-        phone: "138****8888",
-        email: "booklover@example.com",
-        username: "booklover",
-        password: "********",
-      };
-      wx.setStorageSync("USER_INFO", userInfo);
+  checkLoginStatus() {
+    const token = wx.getStorageSync("token");
+    const userInfo = wx.getStorageSync("userInfo");
+
+    if (token && userInfo) {
       this.setData({
         isLoggedIn: true,
         userInfo,
       });
-      wx.hideLoading();
-      wx.showToast({ title: "登录成功", icon: "success" });
-    }, 1000);
+    } else {
+      this.setData({
+        isLoggedIn: false,
+        userInfo: null,
+      });
+    }
+  },
+
+  /**
+   * 点击卡片：未登录时跳转到登录页
+   */
+  onCardTap() {
+    if (!this.data.isLoggedIn) {
+      this.onLogin();
+    }
+  },
+
+  /**
+   * 跳转到登录页面
+   */
+  onLogin() {
+    wx.navigateTo({
+      url: "/pages/login/login",
+    });
   },
 
   /**
    * 退出登录
    */
-  onLogout() {
+  async onLogout() {
     wx.showModal({
       title: "提示",
       content: "确定要退出登录吗？",
-      success: (res) => {
+      success: async (res) => {
         if (res.confirm) {
-          wx.removeStorageSync("USER_INFO");
+          try {
+            // 调用后端退出接口
+            await userApi.logout();
+          } catch (error) {
+            console.error("退出登录失败:", error);
+          }
+
+          // 清除本地存储
+          wx.removeStorageSync("token");
+          wx.removeStorageSync("userInfo");
+
           this.setData({
             isLoggedIn: false,
             userInfo: null,
           });
+
           wx.showToast({ title: "已退出登录", icon: "success" });
         }
       },
@@ -78,16 +96,13 @@ Page({
   },
 
   /**
-   * 加载订单统计数据
+   * 加载订单统计数据（待实现：从后端获取）
    */
   loadOrderStats() {
-    const orders = storage.getOrders();
-    const pendingCount = orders.filter((o) => o.status === "PENDING").length;
-    const paidCount = orders.filter((o) => o.status === "PAID").length;
-
+    // TODO: 从后端获取订单统计数据
     this.setData({
-      pendingCount,
-      paidCount,
+      pendingCount: 0,
+      paidCount: 0,
     });
   },
 

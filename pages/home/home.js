@@ -1,6 +1,4 @@
-const banners = require("../../data/banners.js");
-const categories = require("../../data/categories.js");
-const books = require("../../data/books.js");
+const { bannerApi, categoryApi, bookApi } = require("../../utils/api.js");
 
 Page({
   data: {
@@ -14,16 +12,30 @@ Page({
     this.initPageData();
   },
 
-  initPageData() {
-    const hotBooks = books.filter((item) => item.isHot);
-    const newBooks = books.filter((item) => item.isNew);
+  async initPageData() {
+    wx.showLoading({ title: "加载中..." });
 
-    this.setData({
-      banners,
-      categories,
-      hotBooks,
-      newBooks,
-    });
+    try {
+      // 并行请求所有数据
+      const [bannersRes, categoriesRes, hotBooksRes, newBooksRes] =
+        await Promise.all([
+          bannerApi.getBanners(),
+          categoryApi.getCategories(),
+          bookApi.getHotBooks(),
+          bookApi.getNewBooks(),
+        ]);
+
+      this.setData({
+        banners: bannersRes.data,
+        categories: categoriesRes.data,
+        hotBooks: hotBooksRes.data,
+        newBooks: newBooksRes.data,
+      });
+    } catch (error) {
+      console.error("加载数据失败:", error);
+    } finally {
+      wx.hideLoading();
+    }
   },
 
   goCategory(e) {

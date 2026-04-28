@@ -87,35 +87,28 @@
 }
 
 .quantity-row .label {
-  font-size: 28rpx;
+  font-size: 32rpx;
   color: #333;
+  white-space: nowrap;
+  padding-right: 300rpx;
 }
 
 .quantity-box {
   display: flex;
   align-items: center;
-  gap: 0;
+  border: 1rpx solid #ddd;
+  border-radius: 8rpx;
+  overflow: hidden;
 }
 
 .qty-btn {
   width: 60rpx;
-  height: 60rpx;
-  line-height: 60rpx;
-  padding: 0;
-  font-size: 32rpx;
-  background: #f5f5f5;
-  border-radius: 0;
+  text-align: center;
+  padding: 6rpx 0;
+  background: #fafafa;
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.qty-btn:first-child {
-  border-radius: 8rpx 0 0 8rpx;
-}
-
-.qty-btn:last-child {
-  border-radius: 0 8rpx 8rpx 0;
 }
 
 .qty-btn[disabled] {
@@ -124,14 +117,10 @@
 }
 
 .qty-input {
-  width: 80rpx;
-  height: 60rpx;
-  line-height: 60rpx;
+  width: 100rpx;
   text-align: center;
-  font-size: 28rpx;
+  font-size: 32rpx;
   background: #fff;
-  border-top: 1rpx solid #f5f5f5;
-  border-bottom: 1rpx solid #f5f5f5;
 }
 
 .desc-title {

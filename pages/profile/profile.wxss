@@ -12,23 +12,35 @@
   display: flex;
   align-items: center;
   gap: 24rpx;
+  /* 关键：允许头像溢出容器，实现悬浮效果 */
+  overflow: visible; 
 }
 
+/* 头像容器 */
 .avatar {
   width: 120rpx;
   height: 120rpx;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%; /* 圆形容器 */
+  background: #fff; /* 白色背景，防止图片加载慢时难看 */
+  border: 4rpx solid #fff; /* 白色边框 */
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 4rpx solid rgba(255, 255, 255, 0.5);
+  overflow: hidden; /* 关键：隐藏超出圆形的部分，让图片变圆 */
+  flex-shrink: 0; /* 防止在空间不足时被压缩 */
 }
 
+/* 头像图片样式 - 新增 */
+.avatar-image {
+  width: 100%;
+  height: 100%;
+}
+
+/* 头像文字样式 */
 .avatar-text {
-  color: #fff;
+  color: #2b7cff; /* 文字颜色改为蓝色，在白色背景上更清晰 */
   font-size: 48rpx;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .user-info {
@@ -47,6 +59,19 @@
   font-size: 24rpx;
 }
 
+/* 未登录时的提示文字样式 */
+.login-tip {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 26rpx;
+  font-weight: 500;
+}
+
+/* 已登录时的用户ID样式 */
+.user-id {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 24rpx;
+}
+
 .logout-btn {
   padding: 12rpx 24rpx;
   background: rgba(255, 255, 255, 0.2);
@@ -58,9 +83,11 @@
 /* 通用区块 */
 .section {
   background: #fff;
-  margin: -40rpx 24rpx 24rpx;
+  margin: -40rpx 24rpx 24rpx; /* 负边距实现卡片上移覆盖蓝色背景 */
   border-radius: 16rpx;
   padding: 30rpx;
+  position: relative;
+  z-index: 2; /* 确保白色卡片层级在头像之上（如果需要头像被遮挡）或之下 */
 }
 
 .section:last-of-type {

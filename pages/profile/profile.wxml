@@ -1,22 +1,37 @@
 <view class="page">
   <!-- 用户信息卡片 -->
-  <view class="user-card" bindtap="{{isLoggedIn ? '' : 'onLogin'}}">
+  <view class="user-card" bindtap="handleUserCardTap">
+    <!-- 头像区域 -->
     <view class="avatar">
-      <text class="avatar-text">{{isLoggedIn ? userInfo.nickName.charAt(0) : '用'}}</text>
+      <!-- 1. 如果有头像链接，显示图片 -->
+      <image wx:if="{{userInfo && userInfo.avatar}}" src="{{userInfo.avatar}}" mode="aspectFill" class="avatar-image"></image>
+      
+      <!-- 2. 如果没头像，显示文字首字母或默认文字 -->
+      <text wx:else class="avatar-text">
+        {{userInfo ? userInfo.username.charAt(0).toUpperCase() : '登录'}}
+      </text>
     </view>
+
+    <!-- 用户信息 -->
     <view class="user-info">
-      <view class="nickname">{{isLoggedIn ? userInfo.nickName : '微信用户'}}</view>
+      <!-- 昵称区域：优先显示 nickname，没有则显示 username -->
+      <view class="nickname">
+        {{userInfo ? (userInfo.nickname || userInfo.username) : '点击登录'}}
+      </view>
+      
       <view class="tips">
-        <text wx:if="{{isLoggedIn}}">{{userInfo.level}} · {{userInfo.phone}}</text>
-        <text wx:else>点击登录享更多权益</text>
+        <text wx:if="{{userInfo}}" class="user-id">ID: {{userInfo.id}}</text>
+        <text wx:else class="login-tip">点击登录享更多权益</text>
       </view>
     </view>
-    <view wx:if="{{isLoggedIn}}" class="logout-btn" bindtap="onLogout" catchtap="true">
+
+    <!-- 退出按钮 -->
+    <view wx:if="{{userInfo}}" class="logout-btn" catchtap="onLogout">
       <text>退出</text>
     </view>
   </view>
 
-  <!-- 订单区域 -->
+  <!-- 我的订单 -->
   <view class="section">
     <view class="section-header">
       <text class="section-title">我的订单</text>
@@ -27,21 +42,19 @@
     </view>
 
     <view class="order-tabs">
-      <view class="order-item" bindtap="goToOrders" data-status="PENDING">
+      <view class="order-item">
         <view class="order-icon pending">
           <text class="iconfont">💳</text>
         </view>
         <text class="order-label">待付款</text>
-        <view class="badge" wx:if="{{pendingCount > 0}}">{{pendingCount}}</view>
       </view>
-      <view class="order-item" bindtap="goToOrders" data-status="PAID">
+      <view class="order-item">
         <view class="order-icon paid">
           <text class="iconfont">📦</text>
         </view>
         <text class="order-label">待收货</text>
-        <view class="badge" wx:if="{{paidCount > 0}}">{{paidCount}}</view>
       </view>
-      <view class="order-item" bindtap="goToOrders">
+      <view class="order-item">
         <view class="order-icon all">
           <text class="iconfont">📋</text>
         </view>

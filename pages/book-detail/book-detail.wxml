@@ -3,14 +3,10 @@
     <image class="cover" src="{{book.cover}}" mode="aspectFill" />
 
     <view class="content">
-      <view class="title">{{book.name}}</view>
+      <!-- 🔥 修复：title 替换 name -->
+      <view class="title">{{book.title}}</view>
       <view class="author">作者：{{book.author}}</view>
-      <view class="author">出版社：{{book.press}}</view>
-
-      <view class="tags">
-        <text wx:if="{{book.isNew}}" class="tag new">新书</text>
-        <text wx:if="{{book.isHot}}" class="tag hot">热门</text>
-      </view>
+      <view class="author">出版社：{{book.press || '暂无'}}</view>
 
       <view class="price">¥{{book.price}}</view>
       <view class="meta">销量：{{book.sales}} ｜ 库存：{{book.stock}}</view>
@@ -26,10 +22,7 @@
       </view>
 
       <view class="desc-title">图书简介</view>
-      <view class="desc">{{book.desc}}</view>
-
-      <view class="desc-title">详细介绍</view>
-      <view class="desc">{{book.detail}}</view>
+      <view class="desc">{{book.desc || '暂无简介'}}</view>
     </view>
   </view>
 

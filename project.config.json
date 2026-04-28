@@ -1,5 +1,6 @@
 {
   "setting": {
+    "urlCheck": false,
     "es6": true,
     "postcss": true,
     "minified": true,
@@ -21,7 +22,8 @@
     "disableUseStrict": false,
     "condition": false,
     "swc": false,
-    "disableSWC": true
+    "disableSWC": true,
+    "ignoreUploadUnusedFiles": true
   },
   "compileType": "miniprogram",
   "simulatorPluginLibVersion": {},
@@ -29,7 +31,7 @@
     "ignore": [],
     "include": []
   },
-  "appid": "wxdba189c5a14ad2d7",
+  "appid": "wx87df24e1a4c4dc93",
   "editorSetting": {},
   "libVersion": "3.15.2"
 }

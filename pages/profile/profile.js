@@ -1,135 +1,93 @@
 // pages/profile/profile.js
-const storage = require("../../utils/storage.js");
+const { userApi } = require("../../utils/api.js");
 
 Page({
-  /**
-   * 页面的初始数据
-   */
   data: {
-    pendingCount: 0,
-    paidCount: 0,
-    isLoggedIn: false,
     userInfo: null,
   },
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
   onLoad() {
-    // 检查登录状态
-    const userInfo = wx.getStorageSync("USER_INFO");
-    if (userInfo) {
-      this.setData({
-        isLoggedIn: true,
-        userInfo,
-      });
+    console.log("profile onLoad");
+    this.checkLoginStatus();
+  },
+
+  onShow() {
+    console.log("profile onShow");
+    this.checkLoginStatus();
+  },
+
+  checkLoginStatus() {
+    const userInfo = wx.getStorageSync("userInfo");
+    console.log("【调试日志】读取到的userInfo:", userInfo);
+
+    if (userInfo && userInfo.id) {
+      this.setData({ userInfo });
+      console.log("【调试日志】已登录，设置用户信息成功");
+    } else {
+      this.setData({ userInfo: null });
+      console.log("【调试日志】未登录，userInfo为空");
     }
   },
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow() {
-    this.loadOrderStats();
+  goLogin() {
+    wx.navigateTo({ url: "/pages/login/login" });
   },
 
   /**
-   * 模拟登录
-   */
-  onLogin() {
-    wx.showLoading({ title: "登录中..." });
-    setTimeout(() => {
-      const userInfo = {
-        nickName: "图书爱好者",
-        avatar: "",
-        phone: "138****8888",
-        email: "booklover@example.com",
-        username: "booklover",
-        password: "********",
-      };
-      wx.setStorageSync("USER_INFO", userInfo);
-      this.setData({
-        isLoggedIn: true,
-        userInfo,
-      });
-      wx.hideLoading();
-      wx.showToast({ title: "登录成功", icon: "success" });
-    }, 1000);
-  },
-
-  /**
-   * 退出登录
+   * 退出登录处理函数
    */
   onLogout() {
     wx.showModal({
       title: "提示",
-      content: "确定要退出登录吗？",
+      content: "确定退出登录吗？",
       success: (res) => {
         if (res.confirm) {
-          wx.removeStorageSync("USER_INFO");
-          this.setData({
-            isLoggedIn: false,
-            userInfo: null,
+          // 1. 清除本地缓存
+          wx.removeStorageSync("token");
+          wx.removeStorageSync("userInfo");
+
+          // 2. 重置页面数据，让界面变回未登录状态
+          this.setData({ userInfo: null });
+
+          // 3. 提示并跳转
+          wx.showToast({
+            title: "已退出",
+            icon: "success",
+            duration: 1500,
+            success: () => {
+              // 使用 redirectTo 替换当前页面，防止退出后点返回键又回到个人中心
+              setTimeout(() => {
+                wx.redirectTo({
+                  url: '/pages/login/login',
+                });
+              }, 1500);
+            }
           });
-          wx.showToast({ title: "已退出登录", icon: "success" });
         }
-      },
+      }
     });
   },
 
-  /**
-   * 加载订单统计数据
-   */
-  loadOrderStats() {
-    const orders = storage.getOrders();
-    const pendingCount = orders.filter((o) => o.status === "PENDING").length;
-    const paidCount = orders.filter((o) => o.status === "PAID").length;
-
-    this.setData({
-      pendingCount,
-      paidCount,
-    });
-  },
-
-  /**
-   * 跳转到订单列表
-   */
-  goToOrders(e) {
-    const status = e.currentTarget.dataset.status;
-    const url = status
-      ? `/pages/order-list/order-list?status=${status}`
-      : "/pages/order-list/order-list";
-    wx.navigateTo({
-      url,
-    });
-  },
-
-  /**
-   * 跳转到地址管理
-   */
   goToAddress() {
-    wx.navigateTo({
-      url: "/pages/address/address",
-    });
+    if (!this.data.userInfo) {
+      wx.showToast({ title: "请先登录", icon: "none" });
+      this.goLogin();
+      return;
+    }
+    wx.navigateTo({ url: "/pages/address/address" });
   },
 
-  /**
-   * 清空缓存
-   */
   clearStorage() {
     wx.showModal({
       title: "提示",
-      content: "确定要清空所有缓存数据吗？这将清除购物车、订单和地址信息。",
+      content: "确定要清空所有缓存数据吗？",
       success: (res) => {
         if (res.confirm) {
           wx.clearStorageSync();
-          this.loadOrderStats();
-          wx.showToast({
-            title: "缓存已清空",
-            icon: "success",
-          });
+          this.checkLoginStatus();
+          wx.showToast({ title: "缓存已清空", icon: "success" });
         }
-      },
+      }
     });
-  },
+  }
 });

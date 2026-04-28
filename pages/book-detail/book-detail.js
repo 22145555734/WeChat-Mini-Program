@@ -1,4 +1,4 @@
-const books = require("../../data/books.js");
+const { bookApi, cartApi } = require("../../utils/api.js");
 const cartUtil = require("../../utils/cart.js");
 
 Page({
@@ -9,43 +9,53 @@ Page({
 
   onLoad(options) {
     const id = options.id ? Number(options.id) : null;
-    const book = books.find((item) => Number(item.id) === id);
+    this.loadBookDetail(id);
+  },
 
-    if (!book) {
-      wx.showToast({
-        title: "未找到该图书",
-        icon: "none",
-      });
-      setTimeout(() => {
-        wx.navigateBack();
-      }, 1200);
+  // 加载图书详情
+  async loadBookDetail(id) {
+    if (!id) {
+      wx.showToast({ title: "参数错误", icon: "none" });
+      setTimeout(() => wx.navigateBack(), 1200);
       return;
     }
 
-    this.setData({ book });
+    wx.showLoading({ title: "加载中..." });
 
-    wx.setNavigationBarTitle({
-      title: book.name || "图书详情",
-    });
+    try {
+      // 🔥 修复1：拦截器已返回data，直接赋值
+      const book = await bookApi.getBookById(id);
+
+      if (!book) {
+        wx.showToast({ title: "未找到该图书", icon: "none" });
+        setTimeout(() => wx.navigateBack(), 1200);
+        return;
+      }
+
+      this.setData({ book });
+      // 🔥 修复2：后端字段是 title 不是 name
+      wx.setNavigationBarTitle({ title: book.title || "图书详情" });
+
+    } catch (error) {
+      console.error("加载图书详情失败:", error);
+      wx.showToast({ title: "加载失败", icon: "none" });
+    } finally {
+      wx.hideLoading();
+    }
   },
 
   // 减少数量
   onMinus() {
     const count = this.data.count;
-    if (count > 1) {
-      this.setData({ count: count - 1 });
-    }
+    if (count > 1) this.setData({ count: count - 1 });
   },
 
   // 增加数量
   onPlus() {
     const { book, count } = this.data;
     const stock = book?.stock || 99;
-    if (count < stock) {
-      this.setData({ count: count + 1 });
-    } else {
-      wx.showToast({ title: "已达库存上限", icon: "none" });
-    }
+    if (count < stock) this.setData({ count: count + 1 });
+    else wx.showToast({ title: "已达库存上限", icon: "none" });
   },
 
   // 手动输入数量
@@ -60,30 +70,21 @@ Page({
     const { book, count } = this.data;
     if (!book) return;
 
-    // 立即购买：直接创建结算数据，不经过购物车
-    const checkoutItems = [
-      {
-        ...book,
-        count,
-        checked: true,
-      },
-    ];
-
+    const checkoutItems = [{ ...book, count, checked: true }];
     wx.setStorageSync("CHECKOUT_ITEMS", checkoutItems);
-    wx.navigateTo({
-      url: "/pages/checkout/checkout",
-    });
+    wx.navigateTo({ url: "/pages/checkout/checkout" });
   },
 
   onAddCartTap() {
     const { book, count } = this.data;
     if (!book) return;
 
-    cartUtil.addToCart(book, count);
-
-    wx.showToast({
-      title: "已加入购物车",
-      icon: "success",
-    });
+    cartApi.addToCart({ bookId: book.id, quantity: count })
+      .then(() => wx.showToast({ title: "已加入购物车", icon: "success" }))
+      .catch((err) => {
+        console.error("添加购物车失败:", err);
+        cartUtil.addToCart(book, count);
+        wx.showToast({ title: "已加入购物车", icon: "success" });
+      });
   },
 });
